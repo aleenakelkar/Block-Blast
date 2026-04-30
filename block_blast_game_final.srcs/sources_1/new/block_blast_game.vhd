@@ -317,30 +317,26 @@ begin
         else
           r_out := "01"; g_out := '0'; b_out := '0';
         end if;
-
+        
       elsif on_border then
        
-        if cell_occupied = '1' then
-          r_out := PALETTE(cell_color_s).r and "01";
-          g_out := '0';
-          b_out := '0';
-        else
-          r_out := "00"; g_out := '0'; b_out := '0';
-        end if;
+        
+        r_out := "00"; g_out := '0'; b_out := '0';
+        
 
+       elsif on_piece then
+     
+        r_out := PALETTE(piece_color_s).r;
+        g_out := PALETTE(piece_color_s).g;
+        b_out := PALETTE(piece_color_s).b;
+      
       elsif cell_occupied = '1' then
         -- Placed block: full color from palette
         r_out := PALETTE(cell_color_s).r;
         g_out := PALETTE(cell_color_s).g;
         b_out := PALETTE(cell_color_s).b;
-
-      elsif on_piece then
+      
      
-        r_out(1) := PALETTE(piece_color_s).r(1);
-        r_out(0) := '0';
-        g_out    := PALETTE(piece_color_s).r(1) and PALETTE(piece_color_s).g;
-        b_out    := PALETTE(piece_color_s).r(1) and PALETTE(piece_color_s).b;
-
       else
         r_out := "00"; g_out := '0'; b_out := '0';
       end if;
