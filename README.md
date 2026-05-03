@@ -89,6 +89,8 @@ end block_blast_top;
 
 ### Slow Clock Tick Taken from Tetris
 
+### Leddec file Modified from Pong Lab
+
 ## Original Code 
 
 ### Important Behavior: Block Placement
@@ -110,7 +112,6 @@ end block_blast_top;
 #### Aruna Pillai:
 
 #### William Getts:
-
 
 ### Timeline of Work Completed
 
