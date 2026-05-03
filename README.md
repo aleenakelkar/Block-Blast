@@ -12,14 +12,24 @@ A 2D grid where lining up blocks and clearing grids gains you points.
 ### Main Aspects of Block Blast
 
 ### Empty Grid
+Game loads with an empty teal box.
 
 ### Block Placement and Spawning
+Place a block using the buttons. Block moves left with the btnl button, right with btnr button, up with btnu button, and down with btnd button, and is then stamped in place with btnc button. New Block spawns where the cursor remains after placing old block.
 
 ### Column and Row Clearing
+If  row or column is cleared, that row/column is cleared and turns empty.
 
 ### Score Calculation
+| Player Movement|Score Calculation | Final Score |
+|----------|----------|----------|
+| Places a piece, nothing clears  | + 1 | 1 |
+| Places a piece, a row clears | +1+10  | +11 |
+| Places a piece, a column clears | +1+10  | +11 |
+| Places a piece, a row and column clears | +1+10+10  | +21 |
 
 ## Expected Behavior
+The game loads with an empty teal box. The first piece spawns (a red single square), and the block moves left with the btnl button, right with the btnr button, up with btnu button, and down with btnd button. The block is then placed and stamped using the btnc button. The new piece spawns exactly where the old piece was and has a new color that overlaps with the original stamped piece and moves with the same button controls. When either a row or column is fully populated, it clears and turns to all black, and the score on the board updates accordingly. The game is over when the new spawned piece cannot fit in the current grid. Grid is reset using CPU_RESET button.
 
 ### Block Diagram of Game Functionality
 
@@ -46,7 +56,7 @@ For the game to work, you will need the following:
 
 
 ## Setup
-Download the following files from the repository to your computer:
+Download the following files from the repository to your computer: clk_
 
 Once you have downloaded the files, follow these steps:
 1. Open **AMD Vivado™ Design Suite** and create a new RTL project called block_blast_game_final in Vivado Quick Start
@@ -91,7 +101,11 @@ end block_blast_game;
 ```
 
 ### Inputs
-
+clk: System clock
+rst: Mainly used for testing, to reset the whole grid
+btn_left: Button input for making block go left.
+btn_right: Button input for making block go right.
+B
 ### Outputs
 
 ### `Block_Blast_Top.vhd`
