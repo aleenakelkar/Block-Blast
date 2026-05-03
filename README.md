@@ -101,21 +101,21 @@ end block_blast_game;
 ```
 
 ### Inputs
-clk: System clock
-rst: Mainly used for testing, to reset the whole grid
-btn_left: Button input for making block go left.
-btn_right: Button input for making block go right.
-btn_up: Button input for making block go up.
-btn_down: Button input for making block go down.
-btn_place: button input for stamping block on the grid.
-pixel_row: current cursor position (x-dir)
-pixel_col: current cursor position (y-dir)
+- clk: System clock
+- rst: Mainly used for testing, to reset the whole grid
+- btn_left: Button input for making block go left.
+-  btn_right: Button input for making block go right.
+- btn_up: Button input for making block go up.
+- btn_down: Button input for making block go down.
+- btn_place: button input for stamping block on the grid.
+- pixel_row: current cursor position (x-dir)
+- pixel_col: current cursor position (y-dir)
 
 ### Outputs
-score_out: score calculator to be displayed on board
-red_out: red component of color of stamped block (two bit vector because wanted more color options, derived from lab 3)
-green_out: red component of color of stamped block
-blue_out: red component of color of stamped block
+- score_out: score calculator to be displayed on board
+- red_out: red component of color of stamped block (two bit vector because wanted more color options, derived from lab 3)
+- green_out: red component of color of stamped block
+- blue_out: red component of color of stamped block
 
 ### `Block_Blast_Top.vhd`
 ```
