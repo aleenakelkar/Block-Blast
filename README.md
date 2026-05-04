@@ -147,7 +147,8 @@ end block_blast_top;
 ## Modifications
 
 ### Set of Preset Blocks taken from Tetris Fall 2023
-We wanted to create a random block generator, where the options are from 7 preset blocks. This was done by an array, similiar to the old Tetris project where they select a block option from an array. Each index marks where the block will extend to, essentially adding a new square there.
+We wanted to create a random block generator, where the options are from 7 preset blocks. This was done by an array, similiar to the old Tetris project where they select a block option from an array. Each index marks where the block will extend to, essentially adding a new square there. The same logic applies for colors, as there are preset colors and the random generator should just select from this constant color type.
+
 ### `Block_Blast_Game.vhd`
 ```
   constant SHAPES : all_shapes_t := (
@@ -161,7 +162,20 @@ We wanted to create a random block generator, where the options are from 7 prese
     (('0','1','0'),('0','1','0'),('1','1','0'))   -- 7: J
   );
 ```
+### `Block_Blast_Game.vhd`
+```
+constant PALETTE : palette_t := (
+    0 => (r => "11", g => '0', b => '0'),  -- Red
+    1 => (r => "00", g => '1', b => '0'),  -- Green
+    2 => (r => "00", g => '0', b => '1'),  -- Blue
+    3 => (r => "11", g => '1', b => '0'),  -- Yellow
+    4 => (r => "11", g => '0', b => '1'),  -- Magenta
+    5 => (r => "00", g => '1', b => '1'),  -- Cyan
+    6 => (r => "10", g => '1', b => '0'),  -- Orange
+    7 => (r => "11", g => '1', b => '1')   -- White
+  );
 
+```
 ### Slow Clock Tick Taken from Tetris
 This process is from the Tetris game from Fall 2023. This process runs on every rising edge of the clock and increments a counter called clk_div. On each cycle, it resets slow_tick to 0 by default. When the counter reaches 0 (after wrapping around), it sets slow_tick to 1 for exactly one clock cycle. This effectively creates a periodic pulse that occurs once every full count of the counter.
 ### `Block_Blast_Game.vhd`
