@@ -49,7 +49,7 @@ For the game to work, you will need the following:
   
 - Monitor with VGA Port
   
-  <img src="monitor.png" alt="Monitor" width="300"/>
+  <img src="Module Hierarchy.jpg" alt="Module Hierarchy" width="300"/>
   
 - AMD Vivado™ Design Suite
 
