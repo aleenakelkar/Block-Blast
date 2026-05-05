@@ -31,7 +31,7 @@ If  row or column is cleared, that row/column is cleared and turns empty.
 The game loads with an empty teal box. The first piece spawns (a red single square), and the block moves left with the btnl button, right with the btnr button, up with btnu button, and down with btnd button. The block is then placed and stamped using the btnc button. The new piece spawns exactly where the old piece was and has a new color that overlaps with the original stamped piece and moves with the same button controls. When either a row or column is fully populated, it clears and turns to all black, and the score on the board updates accordingly. The game is over when the new spawned piece cannot fit in the current grid. Grid is reset using CPU_RESET button.
 
 ### Block Diagram of Game Functionality
-
+  <img src="Block Blast Game functionaility.png" alt="Game Functionality" width="500"/>
 ## Required Hardware
 
 For the game to work, you will need the following:
