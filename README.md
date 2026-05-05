@@ -32,7 +32,7 @@ The game loads with an empty teal box. The first piece spawns (a red single squa
 
 ### Block Diagram of Game Functionality
 
-  <img src="Block_Blast_Diagram.png" alt="Game Functionality" width="600"/>
+  <img src="Block_Blast_Diagram.png" alt="Game Functionality" width="900"/>
   
 ## Required Hardware
 
