@@ -204,9 +204,9 @@ This process is from the Tetris game from Fall 2023. This process runs on every 
   end process;
 end block_blast_top;
 ```
-### Leddec file Modified from Pong Lab
 
 ## Original Code 
+### Leddec file Modified from Pong Lab
 ```
 -- leddec.vhd
 -- Score display driver for Block Blast
