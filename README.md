@@ -318,6 +318,15 @@ end Behavioral;
             end loop;
             if not any_fit then game_over <= '1'; end if;
 ```
+### Important Behavior: Game over logic
+```
+      if game_over = '1' then
+        if cell_occupied = '1' then
+          r_out := "11"; g_out := '0'; b_out := '0';
+        else
+          r_out := "01"; g_out := '0'; b_out := '0';
+        end if;
+```
 ### Important Behvaior: Row and Column Clearing
 ```
             -- Clear full rows
