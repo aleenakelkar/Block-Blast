@@ -150,7 +150,7 @@ end block_blast_top;
 - BTNU       : Up Button
 - BTND       : Down Button
 - BTNC       : Stamp Button
-- 
+  
 ### Outputs
 - VGA_R      : Red color component of the output color of each piece
 - VGA_G      : Green color component of output color of each piece
@@ -160,7 +160,7 @@ end block_blast_top;
 - SEG        : Segment on leddec
 - DP         : Decimals for each score
 - AN         : Anode on leddec
-- 
+  
 ## Modifications
 
 ### Set of Preset Blocks taken from Tetris Fall 2023
@@ -330,7 +330,7 @@ end Behavioral;
           r_out := "01"; g_out := '0'; b_out := '0';
         end if;
 ```
-### Important Behvaior: Row and Column Clearing
+### Important Behavior: Row and Column Clearing
 ```
             -- Clear full rows
             lines := 0;
@@ -376,7 +376,7 @@ end Behavioral;
 
 ```
 ### Important Behavior: Coloring of Blocks based on Placement
-```
+If the current pixel is within the game's grid, the cell location variables and the border can be determined accordingly. First, if the game is over and makes the screen red accordingly, then it checks if the current pixel is on a border and changes the color accordingly; the borders are black. Then it moves on to actually coloring the cell. If it's on a piece, the RGB out is that piece's color, but if the cell is already occupied, then that color is overwritten.
     if in_grid then
       cell_c := (current_x_int - GRID_LEFT) / CELL_SIZE;
       cell_r := (current_y_int - GRID_TOP)  / CELL_SIZE;
