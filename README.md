@@ -51,7 +51,7 @@ For the game to work, you will need the following:
   
 - Monitor with VGA Port
   
-  <img src="Module Hierarchy.jpg" alt="Module Hierarchy" width="300"/>
+  <img src="monitor.png" alt="Monitor" width="300"/>
   
 - AMD Vivado™ Design Suite
 
@@ -77,7 +77,7 @@ Once you have downloaded the files, follow these steps:
 12. Program should appear on the screen
 
 ## Module Hierarchy
-  <img src="Module Hierarcy.jpg" alt="Monitor" width="300"/>
+   <img src="Module Hierarchy.jpg" alt="Module Hierarchy" width="600"/>
   
 ## Inputs and Outputs
 
