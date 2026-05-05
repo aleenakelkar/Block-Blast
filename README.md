@@ -140,9 +140,24 @@ end block_blast_top;
 ```
 
 ### Inputs
-
+- CLK100MHZ: System Clock
+- CPU_RESETN : CPU Reset button
+- BTNL       : Left Button
+- BTNR       : Right Button
+- BTNU       : Up Button
+- BTND       : Down Button
+- BTNC       : Stamp Button
+- 
 ### Outputs
-
+- VGA_R      : Red color component of the output color of each piece
+- VGA_G      : Green color component of output color of each piece
+- VGA_B      : Blue color component of output color of each pice
+- VGA_HS     : Counts each horizontal line on the monitor 
+- VGA_VS     : Counts each vertical line on the monitor
+- SEG        : Segment on leddec
+- DP         : Decimals for each score
+- AN         : Anode on leddec
+- 
 ## Modifications
 
 ### Set of Preset Blocks taken from Tetris Fall 2023
