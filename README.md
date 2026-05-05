@@ -207,17 +207,233 @@ end block_blast_top;
 ### Leddec file Modified from Pong Lab
 
 ## Original Code 
+```
+-- leddec.vhd
+-- Score display driver for Block Blast
+-- Wraps leddec16: generates the mux clock, converts binary score to
+-- packed BCD (one decimal digit per nibble), and cycles dig 0-3.
+--
+-- Display layout (right-justified on digits 0-3):
+--   digit 3 = thousands, digit 2 = hundreds,
+--   digit 1 = tens,      digit 0 = ones
+-- Digits 4-7 are left off (leddec16 drives anode="11111111" for dig>3).
 
+library ieee;
+use ieee.std_logic_1164.all;
+use ieee.std_logic_unsigned.all;
+use ieee.numeric_std.all;
+
+entity leddec is
+  port (
+    clk   : in  std_logic;                      -- 40 MHz
+    score : in  std_logic_vector(15 downto 0);  -- binary score from game
+    seg   : out std_logic_vector(6 downto 0);
+    anode : out std_logic_vector(7 downto 0)
+  );
+end leddec;
+
+architecture Behavioral of leddec is
+
+  signal div_cnt  : std_logic_vector(14 downto 0) := (others => '0');
+  signal dig      : std_logic_vector(2 downto 0)  := "000";
+
+  signal bcd_data : std_logic_vector(15 downto 0);
+
+  component leddec16
+    port (
+      dig   : in  std_logic_vector(2 downto 0);
+      data  : in  std_logic_vector(15 downto 0);
+      anode : out std_logic_vector(7 downto 0);
+      seg   : out std_logic_vector(6 downto 0)
+    );
+  end component;
+
+  signal score_int : integer range 0 to 65535;
+  signal s_cap     : integer range 0 to 9999;
+  signal thou, hund, tens_d, ones_d : integer range 0 to 9;
+
+begin
+
+  score_int <= to_integer(unsigned(score));
+  s_cap     <= 9999 when score_int > 9999 else score_int;
+
+  thou   <= s_cap / 1000;
+  hund   <= (s_cap mod 1000) / 100;
+  tens_d <= (s_cap mod 100)  / 10;
+  ones_d <=  s_cap mod 10;
+
+  -- Pack 4 decimal digits into 16-bit word (each nibble = one digit)
+  bcd_data <= std_logic_vector(to_unsigned(thou,   4)) &
+              std_logic_vector(to_unsigned(hund,   4)) &
+              std_logic_vector(to_unsigned(tens_d, 4)) &
+              std_logic_vector(to_unsigned(ones_d, 4));
+
+  process(clk)
+  begin
+    if rising_edge(clk) then
+      div_cnt <= div_cnt + 1;
+      if div_cnt = 0 then
+        if dig = "011" then
+          dig <= "000";
+        else
+          dig <= dig + 1;
+        end if;
+      end if;
+    end if;
+  end process;
+
+  U_DEC : leddec16
+    port map (
+      dig   => dig,
+      data  => bcd_data,
+      anode => anode,
+      seg   => seg
+    );
+
+end Behavioral;
+```
 ### Important Behavior: Block Placement
-
+```
+            new_grid       := grid;
+            new_color_grid := color_grid;
+            for pr in 0 to 2 loop
+              for pc in 0 to 2 loop
+                if SHAPES(pt, pr, pc) = '1' then
+                  new_grid(cursor_r + pr)(cursor_c + pc)       := '1';
+                  new_color_grid(cursor_r + pr)(cursor_c + pc) := piece_type;
+                end if;
+              end loop;
+            end loop;
+```
 ### Important Behavior: Check if Piece Fits in Grid
-
+```
+           for tr in 0 to GRID_ROWS-1 loop
+              for tc in 0 to GRID_COLS-1 loop
+                if piece_fits(new_grid,
+                              std_logic_vector(to_unsigned(next_type, 3)),
+                              tr, tc) then
+                  any_fit := true;
+                end if;
+              end loop;
+            end loop;
+            if not any_fit then game_over <= '1'; end if;
+```
 ### Important Behvaior: Row and Column Clearing
+```
+            -- Clear full rows
+            lines := 0;
+            for r in 0 to GRID_ROWS-1 loop
+              row_full := '1';
+              for c in 0 to GRID_COLS-1 loop
+                if new_grid(r)(c) = '0' then row_full := '0'; end if;
+              end loop;
+              if row_full = '1' then
+                lines := lines + 1;
+                for c in 0 to GRID_COLS-1 loop
+                  new_grid(r)(c)       := '0';
+                  new_color_grid(r)(c) := "000";
+                end loop;
+              end if;
+            end loop;
 
+            -- Clear full columns
+            for c in 0 to GRID_COLS-1 loop
+              col_full := '1';
+              for r in 0 to GRID_ROWS-1 loop
+                if new_grid(r)(c) = '0' then col_full := '0'; end if;
+              end loop;
+              if col_full = '1' then
+                lines := lines + 1;
+                for r in 0 to GRID_ROWS-1 loop
+                  new_grid(r)(c)       := '0';
+                  new_color_grid(r)(c) := "000";
+                end loop;
+              end if;
+            end loop;
+
+            grid       <= new_grid;
+            color_grid <= new_color_grid;
+
+```
 ### Important Behavior: New Block Spawning
+```
+            next_lfsr  := lfsr(6 downto 0) & (lfsr(7) xor lfsr(5) xor lfsr(4) xor lfsr(3));
+            lfsr       <= next_lfsr;
+            next_type  := to_integer(unsigned(next_lfsr(2 downto 0)));
+            piece_type <= std_logic_vector(to_unsigned(next_type, 3));
 
+```
 ### Important Behavior: Coloring of Blocks based on Placement
+```
+    if in_grid then
+      cell_c := (current_x_int - GRID_LEFT) / CELL_SIZE;
+      cell_r := (current_y_int - GRID_TOP)  / CELL_SIZE;
+      col_i  := (current_x_int - GRID_LEFT) mod CELL_SIZE;
+      row_i  := (current_y_int - GRID_TOP)  mod CELL_SIZE;
 
+      on_border := (row_i < 2) or (row_i >= CELL_SIZE-2) or
+                   (col_i < 2) or (col_i >= CELL_SIZE-2);
+
+      cell_occupied   := grid(cell_r)(cell_c);
+      cell_color_s  := to_integer(unsigned(color_grid(cell_r)(cell_c)));
+      piece_color_s := to_integer(unsigned(piece_type));
+
+      on_piece := false;
+      for pr in 0 to 2 loop
+        for pc in 0 to 2 loop
+          if SHAPES(piece_color_s, pr, pc) = '1' then
+            if (cursor_r + pr) = cell_r and (cursor_c + pc) = cell_c then
+              on_piece := true;
+            end if;
+          end if;
+        end loop;
+      end loop;
+
+      if game_over = '1' then
+        if cell_occupied = '1' then
+          r_out := "11"; g_out := '0'; b_out := '0';
+        else
+          r_out := "01"; g_out := '0'; b_out := '0';
+        end if;
+        
+      elsif on_border then
+       
+        
+        r_out := "00"; g_out := '0'; b_out := '0';
+        
+
+       elsif on_piece then
+     
+        r_out := PALETTE(piece_color_s).r;
+        g_out := PALETTE(piece_color_s).g;
+        b_out := PALETTE(piece_color_s).b;
+      
+      elsif cell_occupied = '1' then
+        -- Placed block: full color from palette
+        r_out := PALETTE(cell_color_s).r;
+        g_out := PALETTE(cell_color_s).g;
+        b_out := PALETTE(cell_color_s).b;
+      
+     
+      else
+        r_out := "00"; g_out := '0'; b_out := '0';
+      end if;
+
+    else
+      r_out := "00"; g_out := '0'; b_out := '0';
+      if (current_x_int = GRID_LEFT-1 or current_x_int = GRID_RIGHT) then
+        if current_y_int >= GRID_TOP-1 and current_y_int <= GRID_BOTTOM then
+          r_out := "01"; g_out := '1'; b_out := '1';
+        end if;
+      end if;
+      if (current_y_int = GRID_TOP-1 or current_y_int = GRID_BOTTOM) then
+        if current_x_int >= GRID_LEFT-1 and current_x_int <= GRID_RIGHT then
+          r_out := "01"; g_out := '1'; b_out := '1';
+        end if;
+      end if;
+    end if;
+
+```
 ## Conclusion
 
 ### Responsibilities
