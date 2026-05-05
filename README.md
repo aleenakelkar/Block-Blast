@@ -75,7 +75,8 @@ Once you have downloaded the files, follow these steps:
 12. Program should appear on the screen
 
 ## Module Hierarchy
-
+  <img src="Module Hierarcy.jpg" alt="Monitor" width="300"/>
+  
 ## Inputs and Outputs
 
 ### `Block_Blast_Game.vhd`
