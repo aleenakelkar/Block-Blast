@@ -445,7 +445,6 @@ If the current pixel is within the game's grid, the cell location variables and 
       end if;
     end if;
 
-```
 ## Conclusion
 
 ### Responsibilities
