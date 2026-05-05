@@ -6,8 +6,7 @@ A 2D grid where lining up blocks and clearing grids gains you points.
 ## Project Overview
 
 ### Gameplay Video on Monitor
-
-### Gameplay Score Counter
+https://youtube.com/shorts/lHxr1ozWsiM?feature=share
 
 ### Main Aspects of Block Blast
 
