@@ -296,6 +296,7 @@ begin
 end Behavioral;
 ```
 ### Important Behavior: Block Placement
+This creates local working copies of the current game board and uses nested loops to scan a 3x3 template for the current piece's active pixels. When an active cell is found, the logic maps it to the board's global coordinates by adding the piece’s cursor row and column offsets to the current loop indices. It then permanently "stamps" the piece into the board’s memory by updating both the occupancy state and the color data at those specific calculated locations.
 ```
             new_grid       := grid;
             new_color_grid := color_grid;
@@ -323,6 +324,7 @@ This handles the logic for "stamping" a piece onto the game board by first creat
             if not any_fit then game_over <= '1'; end if;
 ```
 ### Important Behavior: Game over logic
+This part defines a visual "Game Over" state by overriding the standard display signals with red-tinted color values. When the game ends, the logic checks each cell; those that are occupied are assigned a full-intensity red ("11"), while empty cells are set to a dim red ("01"). By driving the green and blue outputs to zero, the code effectively creates a monochromatic red overlay that distinguishes between blocks and empty space on the final grid.
 ```
       if game_over = '1' then
         if cell_occupied = '1' then
@@ -452,12 +454,22 @@ If the current pixel is within the game's grid, the cell location variables and 
 ### Responsibilities
 
 #### Aleena Kelkar:
+- Worked on coloring each piece and the random piece generator
+- Worked on clearing logic
+- Worked on displaying score on physical board
+- Contributed to repo
 
 #### Aruna Pillai:
 
 #### William Getts:
 
+
 ### Timeline of Work Completed
+- 4/21: Started on initializing the files and coming up with ideas on how to start. Also looked at old tetris files and labs and copied some work.
+- 4/23: Started work on the grid part of the code and coming up with the random piece generator. Also finalized scoring system and wrote out leddec.vhd file
+- 4/28: Continued on block_blast_game and finished up coloring logic.
+- 4/30: Worked through the "negative space" bug
+- 5/5: Finished the code and began working on repo.
 
 ### Difficulties 
 
