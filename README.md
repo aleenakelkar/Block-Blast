@@ -2,7 +2,7 @@
 By: Aleena Kelkar, Aruna Pillai, William Getts
 
 A 2D grid where lining up blocks and clearing grids gains you points. Here is the original board and game example:
-  <img src="Screenshot 2026-05-05 203336.png" alt="Block Blast Example" width="900"/>
+  <img src="Screenshot 2026-05-05 203336.png" alt="Block Blast Example" width="300"/>
 
 ## Project Overview
 
