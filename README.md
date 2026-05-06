@@ -1,7 +1,8 @@
 # CPE 487 Final Project - Block Blast
 By: Aleena Kelkar, Aruna Pillai, William Getts
 
-A 2D grid where lining up blocks and clearing grids gains you points.
+A 2D grid where lining up blocks and clearing grids gains you points. Here is the original board and game example:
+  <img src="Screenshot 2026-05-05 203336.png" alt="Block Blast Example" width="900"/>
 
 ## Project Overview
 
@@ -33,7 +34,7 @@ The game loads with an empty teal box. The first piece spawns (a red single squa
 ### Block Diagram of Game Functionality
 
   <img src="Block_Blast_Diagram.png" alt="Game Functionality" width="900"/>
-  
+
 ## Required Hardware
 
 For the game to work, you will need the following:
