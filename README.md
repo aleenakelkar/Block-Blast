@@ -308,7 +308,8 @@ end Behavioral;
               end loop;
             end loop;
 ```
-### Important Behavior: Check if Piece Fits in Grid
+### Important Behavior: Check if Piece Fits in Grid and Stamp Piece into Place
+This handles the logic for "stamping" a piece onto the game board by first creating local buffer copies of the current grid and color matrices.  It then utilizes nested loops to traverse a 3x3 coordinate space that defines the current piece’s shape and rotation. Inside these loops, the code checks the SHAPES constant to see if a specific cell in that 3x3 area is intended to be occupied. When an occupied cell is detected, the logic updates the new_grid at the absolute board position, which is calculated by adding the piece's cursor offsets to the loop indices. Finally, the new_color_grid is updated at that same coordinate with the piece_type, ensuring the pixel renderer sets the new grid with the correct color.
 ```
            for tr in 0 to GRID_ROWS-1 loop
               for tc in 0 to GRID_COLS-1 loop
