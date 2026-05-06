@@ -451,6 +451,10 @@ If the current pixel is within the game's grid, the cell location variables and 
     end if;
 
 ## Conclusion
+- Random block generation every time with different colors for, had to use an lfsr and series of xors
+- New block spawning would often overlap with grid and create negative space, had to prioritize if statements and create different signals for piece color versus current cell color
+- Clearing logic would not update every time a row/column  was full, had to use a loop to iterate through every time.
+- Game_over logic would not register when the new piece spawned would not fit, had to introduce specific  piece_fits boolean.
 
 ### Responsibilities
 
