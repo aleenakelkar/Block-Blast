@@ -211,6 +211,7 @@ end block_blast_top;
 
 ## Original Code 
 ### Leddec file Modified from Pong Lab
+This file was modified to display the 16 bit binary value of the score into a 4 digit decimal number. It caps the score at 9999 and separates each digit into their own signals (thousands, hundreds, tens, ones) using division and the modulo operator. Then the 4 digits are packed into a 16-bit BCD word. Using a 15 bit counter dig is cycled through digits 0 to 3 so that only one digit is being driven at any one time. The data is then fed to leddec16, where the actual it reads the current dig index and picks out the right 4 bits from BCD for that digit. 
 ```
 -- leddec.vhd
 -- Score display driver for Block Blast
@@ -297,7 +298,7 @@ begin
 end Behavioral;
 ```
 ### Important Behavior: Block Placement
-This creates local working copies of the current game board and uses nested loops to scan a 3x3 template for the current piece's active pixels. When an active cell is found, the logic maps it to the board's global coordinates by adding the piece’s cursor row and column offsets to the current loop indices. It then permanently "stamps" the piece into the board’s memory by updating both the occupancy state and the color data at those specific calculated locations.
+This creates local working copies of the current game board and uses nested loops to scan a 3x3 template for the current piece's active pixels. When an active cell is found, the logic maps it to the board's global coordinates by adding the piece’s cursor row and column offsets to the current loop indices. It then permanently "stamps" the piece into the board’s memory by updating both the occupancy state and the color data at those specific calculated locations. 
 ```
             new_grid       := grid;
             new_color_grid := color_grid;
@@ -335,6 +336,7 @@ This part defines a visual "Game Over" state by overriding the standard display 
         end if;
 ```
 ### Important Behavior: Row and Column Clearing
+This block handles clearing completed rows and columns after a piece is placed. First, it loops through every row in the grid and initializes row_full to 1, but then each cell is looped through and if any are empty, row_full is set to 0. If row_full is 1 at the end of the loop, it clears, and all the cells are set to black. Then it does exactly the same thing for columns. Once all the clearing is done, new_grid and new_color_grid are written back to the actual grid and color_grid signals, ensuring all the changes to the game state are saved.
 ```
             -- Clear full rows
             lines := 0;
@@ -381,7 +383,8 @@ This manages an 8-bit Linear Feedback Shift Register (LFSR), which acts as a pse
 
 ```
 ### Important Behavior: Coloring of Blocks based on Placement
-If the current pixel is within the game's grid, the cell location variables and the border can be determined accordingly. First, if the game is over and makes the screen red accordingly, then it checks if the current pixel is on a border and changes the color accordingly; the borders are black. Then it moves on to actually coloring the cell. If it's on a piece, the RGB out is that piece's color, but if the cell is already occupied, then that color is overwritten.
+This is the decision tree for every pixel's output on the screen, if the current pixel is within the game's grid, it figures out which cell the pixel is in and whether it is the border or not. Then, it checks the cell's status, if it is already occupied by a placed block, what color it is, and whether the current piece is overlapping that cell by looping through the 3x3 array. Then, to determine the actual color of the cell it goes down a priority chain, if the game is over and makes the screen red accordingly, it checks if the current pixel is on a border and changes the color accordingly; the borders are black. Then if the current piece covers the cell, it gets the current piece's palette colour. If the cell has a placed block, it gets that block's stored palette colour. Otherwise the cell is empty and goes black. Then in the else statement the game grid's outline is drawn.
+```
     if in_grid then
       cell_c := (current_x_int - GRID_LEFT) / CELL_SIZE;
       cell_r := (current_y_int - GRID_TOP)  / CELL_SIZE;
@@ -449,7 +452,7 @@ If the current pixel is within the game's grid, the cell location variables and 
         end if;
       end if;
     end if;
-
+```
 ## Conclusion
 
 ### Responsibilities
@@ -461,6 +464,10 @@ If the current pixel is within the game's grid, the cell location variables and 
 - Contributed to repo
 
 #### Aruna Pillai:
+- Worked on the bug with the overlapping/disappearing pieces
+- Worked on inital planning and setup of project
+- Worked on decision tree for coloring the block
+- Contributed to repo
 
 #### William Getts:
 
