@@ -327,10 +327,9 @@ This handles the logic for "stamping" a piece onto the game board by first creat
 ```
 ### Important Behavior: Game over logic
 This part defines a visual "Game Over" state by overriding the standard display signals with red-tinted color values. When the game ends, the logic checks each cell; those that are occupied are assigned a full-intensity red ("11"), while empty cells are set to a dim red ("01"). By driving the green and blue outputs to zero, the code effectively creates a monochromatic red overlay that distinguishes between blocks and empty space on the final grid.
-
 (Because we could not show it in the video, here is a photo of the game over screen all bright red)
 
-  <img src="Game Over.jpeg" alt="game over" width="300"/>
+-  <img src="Game Over.jpeg" alt="game over" width="300"/>
 
 ```
       if game_over = '1' then
