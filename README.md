@@ -474,7 +474,10 @@ This is the decision tree for every pixel's output on the screen, if the current
 - Contributed to repo
 
 #### William Getts:
-
+- Worked on the bug with overlapping/disappering pieces
+- Worked on code to display game on VGA screen
+- Worked on scoring logic
+- Contributed to repo
 
 ### Timeline of Work Completed
 - 4/21: Started on initializing the files and coming up with ideas on how to start. Also looked at old tetris files and labs and copied some work.
